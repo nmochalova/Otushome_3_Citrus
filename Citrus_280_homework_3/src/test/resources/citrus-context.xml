@@ -51,5 +51,21 @@
             <citrus:schema id="DATAACCESS" location="classpath:wsdl/numberconversion.wsdl" />
         </citrus:schemas>
     </citrus:schema-repository>
-    	
+
+
+    <!--REST Client (Mock reqres)-->
+    <citrus-http:client id="restClient"
+                        request-url="${urlMock}"
+                        content-type="application/json"
+                        timeout="15000"/>
+
+    <!--REST Server (Mock reqres)-->
+    <citrus-http:server id="restServer"
+                        port="5555"
+                        auto-start="true"
+                        timeout="15000"/>
+
+    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
+        <property name="serializationInclusion" value="NON_NULL"/>
+    </bean>
 </beans>
