@@ -21,9 +21,9 @@ public class SQLHelper extends TestNGCitrusTestRunner {
         query(action -> action
                 .dataSource(sqlHelper)
                 .statement("SELECT ID FROM TEST_TABLE;")
-                .extract("ID", "ID")
+                .extract("id", "ID")
         );
 
-        echo("ID = " + context.getVariable("ID"));
+        echo("ID = ${ID}");
     }
 }
