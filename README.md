@@ -1,7 +1,7 @@
 # Homework Citrus 3
 **Содержание проекта:** 
-- Mock тесты с использованием Citrus Framework v.3.2.1  
-- API Helpers
+- Mock тесты с использованием Citrus Framework v.2.8.0  
+- API Helpers (http,soap, sql) с использованием Citrus Framework v.2.8.0  
 
 ## В папке mocks/ находятся следующие тесты:
 
