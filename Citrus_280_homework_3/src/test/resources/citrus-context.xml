@@ -20,7 +20,7 @@
     <!-- Common settings -->
     <context:property-placeholder location="classpath:citrus.properties"/>
 
-    <citrus:schema-repository id="schemaRepository"/>
+<!--    <citrus:schema-repository id="schemaRepository"/>-->
 
     <citrus:global-variables>
         <citrus:variable name="project.name" value="Citrus Integration Tests"/>
