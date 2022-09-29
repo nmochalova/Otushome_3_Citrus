@@ -11,22 +11,26 @@ import com.consol.citrus.dsl.testng.TestNGCitrusTestRunner;
 import com.consol.citrus.message.MessageType;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.Test;
-import pojo.http.GetUserRatingResponse;
+import pojo.http.UserToCourse;
 
-public class testMockGetUserRating extends TestNGCitrusTestRunner {
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class MockGetListUsersTest extends TestNGCitrusTestRunner {
     public TestContext context;
 
 
-    @Test(description = "Получение оценки пользователя", enabled = true)
+    @Test(description = "Получение списка пользователей", enabled = true)
     @CitrusTest
-    public void mockTestGetUser(){
+    public void mockGetListUsers(){
         this.context = citrus.createTestContext();
 
         //При помощи http-клиента отправляем get-запрос в нашу заглушку restServer
         http(httpActionBuilder -> httpActionBuilder
                 .client("restClient")
                 .send()
-                .get("user/get/"+context.getVariable("userId"))
+                .get("/user/get/all")
                 .fork(true) //!!! Добавлен асинхрон для работы с localhost: дожидаться ответа после взаимодействия с сервером
         );
 
@@ -42,10 +46,14 @@ public class testMockGetUserRating extends TestNGCitrusTestRunner {
                 .send()
                 .response(HttpStatus.OK)
                 .messageType(MessageType.JSON)
-                .payload("{\n" +
-                        "  \"name\": \"Test user\",\n" +
-                        "  \"score\": 78\n" +
-                        "}"));
+                .payload("[\n" +
+                        "  {\n" +
+                        "    \"name\": \"Test user\",\n" +
+                        "    \"course\": \"QA\",\n" +
+                        "    \"email\": \"test@test.test\",\n" +
+                        "    \"age\": 23\n" +
+                        "  }\n" +
+                        "]"));
 
         //Http-клиент получает ответ и валидирует его (проверка по схеме)
         http(httpActionBuilder -> httpActionBuilder
@@ -57,12 +65,16 @@ public class testMockGetUserRating extends TestNGCitrusTestRunner {
         );
     }
 
-    public GetUserRatingResponse getJsonData() {
-        GetUserRatingResponse rating = new GetUserRatingResponse();
+    public List<UserToCourse> getJsonData() {
+        List<UserToCourse> userToCourseList = new ArrayList<>();
 
-        rating.setName("Test user");
-        rating.setScore(78);
+        UserToCourse userToCourse = new UserToCourse();
+        userToCourse.setName("Test user");
+        userToCourse.setCourse("QA");
+        userToCourse.setEmail("test@test.test");
+        userToCourse.setAge(23);
+        userToCourseList.add(userToCourse);
 
-        return rating;
+        return userToCourseList;
     }
 }

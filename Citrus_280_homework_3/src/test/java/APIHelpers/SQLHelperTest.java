@@ -20,7 +20,7 @@ create table test_table (integer id);
 insert into test_table(id) values (1);
  */
 
-public class SQLHelper extends TestNGCitrusTestRunner {
+public class SQLHelperTest extends TestNGCitrusTestRunner {
     @Autowired
     public DataSource sqlHelper;
     public TestContext context;

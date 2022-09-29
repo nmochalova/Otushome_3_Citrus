@@ -17,7 +17,7 @@ import java.net.URL;
  *
  */
 @WebServiceClient(name = "NumberConversion",
-                  wsdlLocation = "file:/C:/Work/Git/OtusCitrusFramework/newLesson/src/test/resources/wsdl/numberconversion.wsdl",
+                  wsdlLocation = "file:src/test/resources/wsdl/numberconversion.wsdl",
                   targetNamespace = "http://www.dataaccess.com/webservicesserver/")
 public class NumberConversion extends Service {
 

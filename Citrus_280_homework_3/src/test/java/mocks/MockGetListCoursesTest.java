@@ -11,26 +11,26 @@ import com.consol.citrus.dsl.testng.TestNGCitrusTestRunner;
 import com.consol.citrus.message.MessageType;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.Test;
-import pojo.http.UserToCourse;
+import pojo.http.Course;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class testMockGetListUsers extends TestNGCitrusTestRunner {
+public class MockGetListCoursesTest extends TestNGCitrusTestRunner {
     public TestContext context;
 
 
-    @Test(description = "Получение списка пользователей", enabled = true)
+    @Test(description = "Получение списка курсов", enabled = true)
     @CitrusTest
-    public void mockGetListUsers(){
+    public void mockGetListCourses(){
         this.context = citrus.createTestContext();
 
         //При помощи http-клиента отправляем get-запрос в нашу заглушку restServer
         http(httpActionBuilder -> httpActionBuilder
                 .client("restClient")
                 .send()
-                .get("/user/get/all")
+                .get("/cource/get/all")
                 .fork(true) //!!! Добавлен асинхрон для работы с localhost: дожидаться ответа после взаимодействия с сервером
         );
 
@@ -48,10 +48,12 @@ public class testMockGetListUsers extends TestNGCitrusTestRunner {
                 .messageType(MessageType.JSON)
                 .payload("[\n" +
                         "  {\n" +
-                        "    \"name\": \"Test user\",\n" +
-                        "    \"course\": \"QA\",\n" +
-                        "    \"email\": \"test@test.test\",\n" +
-                        "    \"age\": 23\n" +
+                        "    \"name\": \"QA java\",\n" +
+                        "    \"price\": 15000\n" +
+                        "  },\n" +
+                        "  {\n" +
+                        "    \"name\": \"Java\",\n" +
+                        "    \"price\": 12000\n" +
                         "  }\n" +
                         "]"));
 
@@ -65,16 +67,19 @@ public class testMockGetListUsers extends TestNGCitrusTestRunner {
         );
     }
 
-    public List<UserToCourse> getJsonData() {
-        List<UserToCourse> userToCourseList = new ArrayList<>();
+    public List<Course> getJsonData() {
+        List<Course> courses = new ArrayList<>();
 
-        UserToCourse userToCourse = new UserToCourse();
-        userToCourse.setName("Test user");
-        userToCourse.setCourse("QA");
-        userToCourse.setEmail("test@test.test");
-        userToCourse.setAge(23);
-        userToCourseList.add(userToCourse);
+        Course course1 = new Course();
+        course1.setName("QA java");
+        course1.setPrice(15000);
+        courses.add(course1);
 
-        return userToCourseList;
+        Course course2 = new Course();
+        course2.setName("Java");
+        course2.setPrice(12000);
+        courses.add(course2);
+
+        return courses;
     }
 }

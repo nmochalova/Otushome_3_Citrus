@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.testng.annotations.Test;
 
 //HTTP Helper - Авторизация пользователя
-public class HTTPHelper extends TestNGCitrusTestRunner {
+public class HTTPHelperTest extends TestNGCitrusTestRunner {
     private TestContext context;
     private String email = "eve.holt@reqres.in";
     private String password = "cityslicka";

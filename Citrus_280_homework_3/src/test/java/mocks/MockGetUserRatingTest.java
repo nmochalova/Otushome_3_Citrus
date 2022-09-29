@@ -11,26 +11,22 @@ import com.consol.citrus.dsl.testng.TestNGCitrusTestRunner;
 import com.consol.citrus.message.MessageType;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.Test;
-import pojo.http.Course;
+import pojo.http.GetUserRatingResponse;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-public class testMockGetListCourses extends TestNGCitrusTestRunner {
+public class MockGetUserRatingTest extends TestNGCitrusTestRunner {
     public TestContext context;
 
 
-    @Test(description = "Получение списка курсов", enabled = true)
+    @Test(description = "Получение оценки пользователя", enabled = true)
     @CitrusTest
-    public void mockGetListCourses(){
+    public void mockTestGetUser(){
         this.context = citrus.createTestContext();
 
         //При помощи http-клиента отправляем get-запрос в нашу заглушку restServer
         http(httpActionBuilder -> httpActionBuilder
                 .client("restClient")
                 .send()
-                .get("/cource/get/all")
+                .get("user/get/"+context.getVariable("userId"))
                 .fork(true) //!!! Добавлен асинхрон для работы с localhost: дожидаться ответа после взаимодействия с сервером
         );
 
@@ -46,16 +42,10 @@ public class testMockGetListCourses extends TestNGCitrusTestRunner {
                 .send()
                 .response(HttpStatus.OK)
                 .messageType(MessageType.JSON)
-                .payload("[\n" +
-                        "  {\n" +
-                        "    \"name\": \"QA java\",\n" +
-                        "    \"price\": 15000\n" +
-                        "  },\n" +
-                        "  {\n" +
-                        "    \"name\": \"Java\",\n" +
-                        "    \"price\": 12000\n" +
-                        "  }\n" +
-                        "]"));
+                .payload("{\n" +
+                        "  \"name\": \"Test user\",\n" +
+                        "  \"score\": 78\n" +
+                        "}"));
 
         //Http-клиент получает ответ и валидирует его (проверка по схеме)
         http(httpActionBuilder -> httpActionBuilder
@@ -67,19 +57,12 @@ public class testMockGetListCourses extends TestNGCitrusTestRunner {
         );
     }
 
-    public List<Course> getJsonData() {
-        List<Course> courses = new ArrayList<>();
+    public GetUserRatingResponse getJsonData() {
+        GetUserRatingResponse rating = new GetUserRatingResponse();
 
-        Course course1 = new Course();
-        course1.setName("QA java");
-        course1.setPrice(15000);
-        courses.add(course1);
+        rating.setName("Test user");
+        rating.setScore(78);
 
-        Course course2 = new Course();
-        course2.setName("Java");
-        course2.setPrice(12000);
-        courses.add(course2);
-
-        return courses;
+        return rating;
     }
 }

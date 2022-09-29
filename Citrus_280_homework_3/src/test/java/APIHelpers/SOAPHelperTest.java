@@ -11,7 +11,7 @@ import pojo.xml.com.dataaccess.webservicesserver.NumberToDollarsResponse;
 import java.math.BigDecimal;
 
 
-public class SOAPHelper extends TestNGCitrusTestRunner {
+public class SOAPHelperTest extends TestNGCitrusTestRunner {
     public TestContext context;
 
     @Test(description = "SOAP тест: число 20", enabled = true)
