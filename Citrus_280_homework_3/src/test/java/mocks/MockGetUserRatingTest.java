@@ -23,38 +23,18 @@ public class MockGetUserRatingTest extends TestNGCitrusTestRunner {
         this.context = citrus.createTestContext();
 
         //При помощи http-клиента отправляем get-запрос в нашу заглушку restServer
-        http(httpActionBuilder -> httpActionBuilder
-                .client("restClient")
-                .send()
-                .get("user/get/"+context.getVariable("userId"))
-                .fork(true) //!!! Добавлен асинхрон для работы с localhost: дожидаться ответа после взаимодействия с сервером
-        );
+        String userId = context.getVariable("userId");
+        http(MockGetUserRating.mockGetListUserRatingFork(userId));
 
         //Шаги взаимодействия с заглушкой.
         //1. Сначала принимаем get-запрос от клиента
-        http(httpActionBuilder -> httpActionBuilder
-                .server("restServer")
-                .receive()
-                .get());
+        http(MockGetUserRating.mockRestServerReceiveGet());
         //2. Отправляем хардкод-ответ по запрошенным данным в соответствии с контрактом
-        http(httpActionBuilder -> httpActionBuilder
-                .server("restServer")
-                .send()
-                .response(HttpStatus.OK)
-                .messageType(MessageType.JSON)
-                .payload("{\n" +
-                        "  \"name\": \"Test user\",\n" +
-                        "  \"score\": 78\n" +
-                        "}"));
+        http(MockGetUserRating.mockRestServerResponseUserRating());
 
         //Http-клиент получает ответ и валидирует его (проверка по схеме)
-        http(httpActionBuilder -> httpActionBuilder
-                .client("restClient")
-                .receive()
-                .response(HttpStatus.OK)
-                .messageType(MessageType.JSON)
-                .payload(getJsonData(),"objectMapper")
-        );
+        GetUserRatingResponse userRating = getJsonData();
+        http(MockGetUserRating.mockRestClientReceiveUserRating(userRating));
     }
 
     public GetUserRatingResponse getJsonData() {
