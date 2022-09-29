@@ -27,44 +27,17 @@ public class MockGetListCoursesTest extends TestNGCitrusTestRunner {
         this.context = citrus.createTestContext();
 
         //При помощи http-клиента отправляем get-запрос в нашу заглушку restServer
-        http(httpActionBuilder -> httpActionBuilder
-                .client("restClient")
-                .send()
-                .get("/cource/get/all")
-                .fork(true) //!!! Добавлен асинхрон для работы с localhost: дожидаться ответа после взаимодействия с сервером
-        );
+        http(MockGetList.mockGetListCoursesFork());
 
         //Шаги взаимодействия с заглушкой.
         //1. Сначала принимаем get-запрос от клиента
-        http(httpActionBuilder -> httpActionBuilder
-                .server("restServer")
-                .receive()
-                .get());
+        http(MockGetList.mockRestServerReceiveGet());
         //2. Отправляем хардкод-ответ по запрошенным данным в соответствии с контрактом
-        http(httpActionBuilder -> httpActionBuilder
-                .server("restServer")
-                .send()
-                .response(HttpStatus.OK)
-                .messageType(MessageType.JSON)
-                .payload("[\n" +
-                        "  {\n" +
-                        "    \"name\": \"QA java\",\n" +
-                        "    \"price\": 15000\n" +
-                        "  },\n" +
-                        "  {\n" +
-                        "    \"name\": \"Java\",\n" +
-                        "    \"price\": 12000\n" +
-                        "  }\n" +
-                        "]"));
+        http(MockGetList.mockRestServerResponseListCourses());
 
         //Http-клиент получает ответ и валидирует его (проверка по схеме)
-        http(httpActionBuilder -> httpActionBuilder
-                .client("restClient")
-                .receive()
-                .response(HttpStatus.OK)
-                .messageType(MessageType.JSON)
-                .payload(getJsonData(),"objectMapper")
-        );
+        List<Course> courseList = getJsonData();
+        http(MockGetList.mockRestClientReceiveListCourses(courseList));
     }
 
     public List<Course> getJsonData() {
