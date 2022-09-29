@@ -1,10 +1,8 @@
 package mocks;
-
 /* Из лекции по citrus:
 Заглушка restServer инициализируется при старте теста и ждет нас на порту 5555.
 В citrus заглушка делается под каждый тест, поднимается на портах, тест заканчивается, заглушки закрываются.
  */
-
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.context.TestContext;
 import com.consol.citrus.dsl.testng.TestNGCitrusTestRunner;
@@ -12,7 +10,6 @@ import org.testng.annotations.Test;
 import pojo.http.Course;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class MockGetListCoursesTest extends TestNGCitrusTestRunner {
     public TestContext context;

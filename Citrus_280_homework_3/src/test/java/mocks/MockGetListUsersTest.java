@@ -13,10 +13,8 @@ import pojo.http.UserToCourse;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class MockGetListUsersTest extends TestNGCitrusTestRunner {
     public TestContext context;
-
 
     @Test(description = "Получение списка пользователей", enabled = true)
     @CitrusTest
@@ -26,13 +24,9 @@ public class MockGetListUsersTest extends TestNGCitrusTestRunner {
         //При помощи http-клиента отправляем get-запрос в нашу заглушку restServer
         http(MockGetListUsers.mockGetListUsersFork());
 
-        //Шаги взаимодействия с заглушкой.
-        //1. Сначала принимаем get-запрос от клиента
         http(MockGetListUsers.mockRestServerReceiveGet());
-        //2. Отправляем хардкод-ответ по запрошенным данным в соответствии с контрактом
         http(MockGetListUsers.mockRestServerResponseListUsers());
 
-        //Http-клиент получает ответ и валидирует его (проверка по схеме)
         List<UserToCourse> userList = getJsonData();
         http(MockGetListUsers.mockRestClientReceiveListCourses(userList));
     }

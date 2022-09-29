@@ -10,7 +10,6 @@ import pojo.xml.com.dataaccess.webservicesserver.NumberToDollarsResponse;
 
 import java.math.BigDecimal;
 
-
 public class SOAPHelperTest extends TestNGCitrusTestRunner {
     public TestContext context;
 
