@@ -8,6 +8,8 @@ import pojo.xml.com.dataaccess.webservicesserver.NumberToDollarsResponse;
 import java.math.BigDecimal;
 
 public class SOAPHelper extends AbstractTestBehavior {
+  private final String SOAP_CLIENT = "soapClient";
+  private final String NAMESPACES = "http://www.dataaccess.com/webservicesserver/";
   private String num;
   private String dollars;
 
@@ -23,19 +25,19 @@ public class SOAPHelper extends AbstractTestBehavior {
 
     //Отправка soap-сообщения с использованием самописного маршелера PojoToXML
     soap()
-            .client("soapClient")
+            .client(SOAP_CLIENT)
             .send()
             .payload(ptxRq.convert(NumberToDollars.class, getNumberToDollarsRequest(),
-                    "http://www.dataaccess.com/webservicesserver/",
+                    NAMESPACES,
                     "NumberToDollars"));
 
     //Получение soap-ответа и сравнение его с эталонным xml
     soap()
-            .client("soapClient")
+            .client(SOAP_CLIENT)
             .receive()
             .xsdSchemaRepository("schemaRepositoryService")
             .payload(ptxRs.convert(NumberToDollarsResponse.class, getNumberToDollarsResponse(),
-                    "http://www.dataaccess.com/webservicesserver/",
+                    NAMESPACES,
                     "NumberToDollarsResponse"));
   }
 

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 
 //Этот http-helper авторизуется в системе с заданными email и password и сравнивает полученный token с ожидаемым
 public class HTTPHelper extends AbstractTestBehavior {
+  private final String REST_CLIENT_REQRES = "restClientReqres";
   private String email;
   private String password;
   private String token;
@@ -19,7 +20,7 @@ public class HTTPHelper extends AbstractTestBehavior {
   @Override
   public void apply() {
     http()
-            .client("restClientReqres")
+            .client(REST_CLIENT_REQRES)
             .send()
             .post("login")
             .messageType(MessageType.JSON)
@@ -29,7 +30,7 @@ public class HTTPHelper extends AbstractTestBehavior {
                     "}");
 
     http()
-            .client("restClientReqres")
+            .client(REST_CLIENT_REQRES)
             .receive()
             .response(HttpStatus.OK)
             .messageType(MessageType.JSON)
