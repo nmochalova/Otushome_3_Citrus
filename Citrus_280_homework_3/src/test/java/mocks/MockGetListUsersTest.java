@@ -8,12 +8,8 @@ package mocks;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.context.TestContext;
 import com.consol.citrus.dsl.testng.TestNGCitrusTestRunner;
-import com.consol.citrus.message.MessageType;
-import org.springframework.http.HttpStatus;
 import org.testng.annotations.Test;
-import pojo.http.Course;
 import pojo.http.UserToCourse;
-
 import java.util.ArrayList;
 import java.util.List;
 
