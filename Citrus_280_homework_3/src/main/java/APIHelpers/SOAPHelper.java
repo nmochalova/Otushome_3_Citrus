@@ -27,8 +27,7 @@ public class SOAPHelper extends AbstractTestBehavior {
             .send()
             .payload(ptxRq.convert(NumberToDollars.class, getNumberToDollarsRequest(),
                     "http://www.dataaccess.com/webservicesserver/",
-                    "NumberToDollars")
-    );
+                    "NumberToDollars"));
 
     //Получение soap-ответа и сравнение его с эталонным xml
     soap()
@@ -37,8 +36,7 @@ public class SOAPHelper extends AbstractTestBehavior {
             .xsdSchemaRepository("schemaRepositoryService")
             .payload(ptxRs.convert(NumberToDollarsResponse.class, getNumberToDollarsResponse(),
                     "http://www.dataaccess.com/webservicesserver/",
-                    "NumberToDollarsResponse")
-    );
+                    "NumberToDollarsResponse"));
   }
 
   //Метод который возвращает эталонный pojo-объект NumberToDollars для сравнения c полем Num=15

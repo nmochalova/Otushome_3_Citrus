@@ -10,6 +10,12 @@ public class HTTPHelper extends AbstractTestBehavior {
   private String password;
   private String token;
 
+  public HTTPHelper(String email, String password, String token) {
+    this.email = email;
+    this.password = password;
+    this.token = token;
+  }
+
   @Override
   public void apply() {
     http()
@@ -31,11 +37,5 @@ public class HTTPHelper extends AbstractTestBehavior {
             .extractFromPayload("$.token","token");  //извлекаем token
 
      echo("token = ${token}"); //выводим token в консоль
-  }
-
-  public HTTPHelper(String email, String password, String token) {
-    this.email = email;
-    this.password = password;
-    this.token = token;
   }
 }
