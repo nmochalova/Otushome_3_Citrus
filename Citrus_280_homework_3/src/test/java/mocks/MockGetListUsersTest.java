@@ -11,6 +11,7 @@ import com.consol.citrus.dsl.testng.TestNGCitrusTestRunner;
 import com.consol.citrus.message.MessageType;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.Test;
+import pojo.http.Course;
 import pojo.http.UserToCourse;
 
 import java.util.ArrayList;
@@ -27,42 +28,17 @@ public class MockGetListUsersTest extends TestNGCitrusTestRunner {
         this.context = citrus.createTestContext();
 
         //При помощи http-клиента отправляем get-запрос в нашу заглушку restServer
-        http(httpActionBuilder -> httpActionBuilder
-                .client("restClient")
-                .send()
-                .get("/user/get/all")
-                .fork(true) //!!! Добавлен асинхрон для работы с localhost: дожидаться ответа после взаимодействия с сервером
-        );
+        http(MockGetListUsers.mockGetListUsersFork());
 
         //Шаги взаимодействия с заглушкой.
         //1. Сначала принимаем get-запрос от клиента
-        http(httpActionBuilder -> httpActionBuilder
-                .server("restServer")
-                .receive()
-                .get());
+        http(MockGetListUsers.mockRestServerReceiveGet());
         //2. Отправляем хардкод-ответ по запрошенным данным в соответствии с контрактом
-        http(httpActionBuilder -> httpActionBuilder
-                .server("restServer")
-                .send()
-                .response(HttpStatus.OK)
-                .messageType(MessageType.JSON)
-                .payload("[\n" +
-                        "  {\n" +
-                        "    \"name\": \"Test user\",\n" +
-                        "    \"course\": \"QA\",\n" +
-                        "    \"email\": \"test@test.test\",\n" +
-                        "    \"age\": 23\n" +
-                        "  }\n" +
-                        "]"));
+        http(MockGetListUsers.mockRestServerResponseListUsers());
 
         //Http-клиент получает ответ и валидирует его (проверка по схеме)
-        http(httpActionBuilder -> httpActionBuilder
-                .client("restClient")
-                .receive()
-                .response(HttpStatus.OK)
-                .messageType(MessageType.JSON)
-                .payload(getJsonData(),"objectMapper")
-        );
+        List<UserToCourse> userList = getJsonData();
+        http(MockGetListUsers.mockRestClientReceiveListCourses(userList));
     }
 
     public List<UserToCourse> getJsonData() {

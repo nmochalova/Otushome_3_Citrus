@@ -8,11 +8,8 @@ package mocks;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.context.TestContext;
 import com.consol.citrus.dsl.testng.TestNGCitrusTestRunner;
-import com.consol.citrus.message.MessageType;
-import org.springframework.http.HttpStatus;
 import org.testng.annotations.Test;
 import pojo.http.Course;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,24 +17,23 @@ import java.util.List;
 public class MockGetListCoursesTest extends TestNGCitrusTestRunner {
     public TestContext context;
 
-
     @Test(description = "Получение списка курсов", enabled = true)
     @CitrusTest
     public void mockGetListCourses(){
         this.context = citrus.createTestContext();
 
         //При помощи http-клиента отправляем get-запрос в нашу заглушку restServer
-        http(MockGetList.mockGetListCoursesFork());
+        http(MockGetListCourses.mockGetListCoursesFork());
 
         //Шаги взаимодействия с заглушкой.
         //1. Сначала принимаем get-запрос от клиента
-        http(MockGetList.mockRestServerReceiveGet());
+        http(MockGetListCourses.mockRestServerReceiveGet());
         //2. Отправляем хардкод-ответ по запрошенным данным в соответствии с контрактом
-        http(MockGetList.mockRestServerResponseListCourses());
+        http(MockGetListCourses.mockRestServerResponseListCourses());
 
         //Http-клиент получает ответ и валидирует его (проверка по схеме)
         List<Course> courseList = getJsonData();
-        http(MockGetList.mockRestClientReceiveListCourses(courseList));
+        http(MockGetListCourses.mockRestClientReceiveListCourses(courseList));
     }
 
     public List<Course> getJsonData() {

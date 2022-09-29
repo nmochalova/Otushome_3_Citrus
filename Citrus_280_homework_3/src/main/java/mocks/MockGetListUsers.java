@@ -5,19 +5,16 @@ import com.consol.citrus.dsl.builder.HttpActionBuilder;
 import com.consol.citrus.message.MessageType;
 import org.springframework.http.HttpStatus;
 import pojo.http.Course;
+import pojo.http.UserToCourse;
 
 import java.util.List;
 
-public class MockGetList {
-  private static final String REST_CLIENT = "restClient";
-  private static final String REST_SERVER = "restServer";
-  private static final String PATH_GET_COURSE = "/cource/get/all";
-
-  public static BuilderSupport<HttpActionBuilder> mockGetListCoursesFork() {
+public class MockGetListUsers extends BaseMock{
+  public static BuilderSupport<HttpActionBuilder> mockGetListUsersFork() {
     return httpActionBuilder -> httpActionBuilder
             .client(REST_CLIENT)
             .send()
-            .get(PATH_GET_COURSE)
+            .get(PATH_GET_USER)
             .fork(true); //!!! Добавлен асинхрон для работы с localhost: дожидаться ответа после взаимодействия с сервером
   }
 
@@ -28,7 +25,7 @@ public class MockGetList {
             .get();
   }
 
-  public static BuilderSupport<HttpActionBuilder> mockRestServerResponseListCourses() {
+  public static BuilderSupport<HttpActionBuilder> mockRestServerResponseListUsers() {
     return httpActionBuilder -> httpActionBuilder
             .server(REST_SERVER)
             .send()
@@ -36,22 +33,20 @@ public class MockGetList {
             .messageType(MessageType.JSON)
             .payload("[\n" +
                     "  {\n" +
-                    "    \"name\": \"QA java\",\n" +
-                    "    \"price\": 15000\n" +
-                    "  },\n" +
-                    "  {\n" +
-                    "    \"name\": \"Java\",\n" +
-                    "    \"price\": 12000\n" +
+                    "    \"name\": \"Test user\",\n" +
+                    "    \"course\": \"QA\",\n" +
+                    "    \"email\": \"test@test.test\",\n" +
+                    "    \"age\": 23\n" +
                     "  }\n" +
                     "]");
   }
 
-  public static BuilderSupport<HttpActionBuilder> mockRestClientReceiveListCourses(List<Course> courseList) {
+  public static BuilderSupport<HttpActionBuilder> mockRestClientReceiveListCourses( List<UserToCourse> usersList) {
    return httpActionBuilder -> httpActionBuilder
-          .client(REST_CLIENT)
-          .receive()
-          .response(HttpStatus.OK)
-          .messageType(MessageType.JSON)
-          .payload(courseList,"objectMapper");
+           .client(REST_CLIENT)
+           .receive()
+           .response(HttpStatus.OK)
+           .messageType(MessageType.JSON)
+           .payload(usersList,"objectMapper");
   }
 }
