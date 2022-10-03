@@ -1,15 +1,9 @@
-package APIHelpers;
+package apiHelpers;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.context.TestContext;
 import com.consol.citrus.dsl.testng.TestNGCitrusTestDesigner;
-import com.consol.citrus.dsl.testng.TestNGCitrusTestRunner;
-import features.PojoToXML;
 import org.testng.annotations.Test;
-import pojo.xml.com.dataaccess.webservicesserver.NumberToDollars;
-import pojo.xml.com.dataaccess.webservicesserver.NumberToDollarsResponse;
-
-import java.math.BigDecimal;
 
 public class SOAPHelperTest extends TestNGCitrusTestDesigner {
     public TestContext context;

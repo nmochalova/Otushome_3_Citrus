@@ -1,9 +1,8 @@
-package APIHelpers;
+package apiHelpers;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.context.TestContext;
 import com.consol.citrus.dsl.testng.TestNGCitrusTestDesigner;
-import com.consol.citrus.dsl.testng.TestNGCitrusTestRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
 

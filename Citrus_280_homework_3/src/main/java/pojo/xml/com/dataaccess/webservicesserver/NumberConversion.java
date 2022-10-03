@@ -21,11 +21,11 @@ import java.net.URL;
                   targetNamespace = "http://www.dataaccess.com/webservicesserver/")
 public class NumberConversion extends Service {
 
-    public final static URL WSDL_LOCATION;
+    private final static URL WSDL_LOCATION;
 
-    public final static QName SERVICE = new QName("http://www.dataaccess.com/webservicesserver/", "NumberConversion");
-    public final static QName NumberConversionSoap = new QName("http://www.dataaccess.com/webservicesserver/", "NumberConversionSoap");
-    public final static QName NumberConversionSoap12 = new QName("http://www.dataaccess.com/webservicesserver/", "NumberConversionSoap12");
+    private final static QName SERVICE = new QName("http://www.dataaccess.com/webservicesserver/", "NumberConversion");
+    private final static QName NumberConversionSoap = new QName("http://www.dataaccess.com/webservicesserver/", "NumberConversionSoap");
+    private final static QName NumberConversionSoap12 = new QName("http://www.dataaccess.com/webservicesserver/", "NumberConversionSoap12");
     static {
         URL url = null;
         try {

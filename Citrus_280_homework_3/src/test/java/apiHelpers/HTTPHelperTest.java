@@ -1,4 +1,4 @@
-package APIHelpers;
+package apiHelpers;
 
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.dsl.testng.TestNGCitrusTestDesigner;

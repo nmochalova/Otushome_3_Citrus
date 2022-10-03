@@ -1,4 +1,4 @@
-package APIHelpers;
+package apiHelpers;
 
 import com.consol.citrus.dsl.design.AbstractTestBehavior;
 import com.consol.citrus.message.MessageType;

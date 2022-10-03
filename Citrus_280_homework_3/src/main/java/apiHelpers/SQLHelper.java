@@ -1,8 +1,8 @@
-package APIHelpers;
+package apiHelpers;
 
 import com.consol.citrus.context.TestContext;
 import com.consol.citrus.dsl.design.AbstractTestBehavior;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.sql.DataSource;
 /*
 Установка docker-образа с postrgres
